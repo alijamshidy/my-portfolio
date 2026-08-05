@@ -1,64 +1,20 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
-import { personalInfo, navLinks } from "@/lib/data"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { navLinks } from "@/lib/data"
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link href="#home" className="text-xl font-bold text-foreground">
-            {personalInfo.name.split(" ")[0]}
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
-          <div className="px-4 py-4 space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="block text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-    </header>
-  )
+  const [open, setOpen] = useState(false)
+  return <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/80 backdrop-blur-xl">
+    <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+      <Link href="#home" className="font-semibold tracking-tight">AJ<span className="text-primary">.</span></Link>
+      <nav className="hidden items-center gap-6 md:flex">{navLinks.map(link => <Link key={link.href} href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">{link.name}</Link>)}</nav>
+      <a href="#contact" className="hidden h-6 items-center rounded-md border border-border px-2 text-xs hover:bg-input/50 md:inline-flex">Let&apos;s talk</a>
+      <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</Button>
+    </div>
+    {open && <nav className="border-t bg-background px-5 py-4 md:hidden">{navLinks.map(link => <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="block py-2 text-sm text-muted-foreground">{link.name}</Link>)}</nav>}
+  </header>
 }

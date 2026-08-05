@@ -1,63 +1,6 @@
+"use client"
+import { Progress } from "@/components/ui/progress"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { skills } from "@/lib/data"
-import { cn } from "@/lib/utils"
-
-interface SkillBarProps {
-  name: string
-  level: number
-}
-
-function SkillBar({ name, level }: SkillBarProps) {
-  return (
-    <div className="space-y-2">
-      <div className="flex justify-between">
-        <span className="font-medium">{name}</span>
-        <span className="text-sm text-muted-foreground">{level}%</span>
-      </div>
-      <div className="h-2 bg-muted rounded-full overflow-hidden">
-        <div
-          className="h-full bg-primary rounded-full transition-all"
-          style={{ width: `${level}%` }}
-        />
-      </div>
-    </div>
-  )
-}
-
-interface SkillSectionProps {
-  title: string
-  items: { name: string; level: number }[]
-}
-
-function SkillSection({ title, items }: SkillSectionProps) {
-  return (
-    <div className="space-y-4">
-      <h3 className="font-semibold text-lg">{title}</h3>
-      <div className="space-y-4">
-        {items.map((skill) => (
-          <SkillBar key={skill.name} {...skill} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-export default function Skills() {
-  return (
-    <section id="skills" className="py-20 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">مهارت‌ها</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            تکنولوژی‌ها و ابزارهایی که در پروژه‌هام ازشون استفاده می‌کنم
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <SkillSection title="فرانت‌اند" items={skills.frontend} />
-          <SkillSection title="بک‌اند" items={skills.backend} />
-          <SkillSection title="ابزارها" items={skills.tools} />
-        </div>
-      </div>
-    </section>
-  )
-}
+function List({ items }: { items: {name:string;level:number}[] }) { return <div className="grid gap-6 md:grid-cols-2">{items.map(item => <div key={item.name}><div className="mb-2 flex justify-between text-xs"><span>{item.name}</span><span className="text-zinc-400">{item.level}%</span></div><Progress value={item.level} /></div>)}</div> }
+export default function Skills() { return <section id="skills" className="bg-zinc-950 py-24 text-zinc-50"><div className="mx-auto max-w-6xl px-5"><p className="text-sm font-medium text-violet-300">CAPABILITIES</p><div className="mt-3 grid gap-8 md:grid-cols-[.85fr_1.15fr]"><h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">A well-rounded stack for modern web products.</h2><Tabs defaultValue="frontend"><TabsList className="mb-8 bg-zinc-800"><TabsTrigger value="frontend">Frontend</TabsTrigger><TabsTrigger value="backend">Backend</TabsTrigger><TabsTrigger value="workflow">Workflow</TabsTrigger></TabsList><TabsContent value="frontend"><List items={skills.frontend} /></TabsContent><TabsContent value="backend"><List items={skills.backend} /></TabsContent><TabsContent value="workflow"><List items={skills.workflow} /></TabsContent></Tabs></div></div></section> }
