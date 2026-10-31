@@ -6,6 +6,14 @@ A **single-page personal portfolio** for Ali Jamshidy, Full-Stack Developer, bui
 
 ---
 
+## 📸 Screenshots
+
+| Hero (`#home`) | Projects (`#projects`) |
+|----------------|------------------------|
+| ![Hero section](docs/screenshots/hero.png) | ![Projects section](docs/screenshots/projects.png) |
+
+---
+
 ## ✨ Sections
 
 | Section | Anchor | Description |
